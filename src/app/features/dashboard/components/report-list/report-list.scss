@@ -1,0 +1,23 @@
+.panel {
+  width: 280px;
+  background: white;
+  padding: 16px;
+  border-right: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+}
+
+.report-item {
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.report-item:hover {
+  background: #f0f3ff;
+}
+
+.active {
+  background: #e0e7ff;
+}

@@ -1,1 +1,30 @@
-<p>report-list works!</p>
+<input
+  type="text"
+  placeholder="Search"
+  (input)="store.search.set($any($event.target).value)"
+/>
+
+<button (click)="open.set(true)">Add</button>
+
+@for (r of store.paginatedReports(); track r.id) {
+    <div (click)="store.select(r.id)">
+        {{ r.title }}
+    </div>
+}
+
+<div class="pager">
+  <button
+    (click)="store.prevPage()"
+    [disabled]="store.page() === 1"
+  >
+    Prev
+  </button>
+
+  <button
+    (click)="store.nextPage()"
+    [disabled]="store.page() === store.totalPages()"
+  >
+    Next
+  </button>
+</div>
+

@@ -37,6 +37,20 @@ export class ReportStore {
     this.selectedId.set(id);
   }
 
+  private generateMetrics() {
+    return {
+      openAlerts: this.rand(50, 150),
+      closingRate: this.rand(30, 90),
+      oldestAlertDays: this.rand(10, 200),
+      unitData: Array.from({ length: 6 }).map(() => this.rand(2, 12)),
+      distribution: [this.rand(10, 40), this.rand(10, 30), this.rand(10, 30), this.rand(10, 30)],
+    };
+  }
+
+  private rand(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
   private load(): Report[] {
     const reports = localStorage.getItem(STORAGE_KEY);
     if (reports) return JSON.parse(reports);
@@ -45,9 +59,20 @@ export class ReportStore {
       id: crypto.randomUUID(),
       title: `Report ${i + 1}`,
       subtitle: `System Metrics`,
+      metrics: this.generateMetrics(),
     }));
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(seed));
     return seed;
+  }
+
+  totalPages = computed(() => Math.ceil(this.filteredReports().length / this.pageSize));
+
+  nextPage() {
+    this.page.update((p) => Math.min(p + 1, this.totalPages()));
+  }
+
+  prevPage() {
+    this.page.update((p) => Math.max(p - 1, 1));
   }
 }

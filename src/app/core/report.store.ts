@@ -75,4 +75,6 @@ export class ReportStore {
   prevPage() {
     this.page.update((p) => Math.max(p - 1, 1));
   }
+
+  pages = computed(() => Array.from({ length: this.totalPages() }, (_, i) => i + 1));
 }

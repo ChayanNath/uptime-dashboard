@@ -1,4 +1,4 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, effect } from '@angular/core';
 import { Report } from '../shared/models/report.model';
 
 const STORAGE_KEY = 'reports';
@@ -12,6 +12,16 @@ export class ReportStore {
   page = signal(1);
 
   readonly pageSize = 12;
+
+  constructor() {
+    effect(() => {
+      const reports = this.reports();
+
+      if (!this.selectedId() && reports.length) {
+        this.selectedId.set(reports[0].id);
+      }
+    });
+  }
 
   filteredReports = computed(() => {
     const s = this.search().toLowerCase();

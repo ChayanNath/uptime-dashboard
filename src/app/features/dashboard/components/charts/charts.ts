@@ -15,7 +15,7 @@ export class Charts {
   @ViewChild('bar') barRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('pie') pieRef!: ElementRef<HTMLCanvasElement>;
 
-  private store = inject(ReportStore);
+  protected store = inject(ReportStore);
 
   private barChart?: Chart;
   private pieChart?: Chart;
@@ -60,13 +60,25 @@ export class Charts {
       },
       options: {
         responsive: true,
+
         plugins: {
           legend: {
             position: 'bottom',
             labels: {
               usePointStyle: true,
-              boxWidth: 6,
+              pointStyle: 'circle',
+              boxWidth: 8,
+              boxHeight: 8,
+              padding: 24,
+              font: {
+                size: 12,
+              },
+              color: '#6b7280',
             },
+          },
+
+          datalabels: {
+            display: false,
           },
         },
         scales: {

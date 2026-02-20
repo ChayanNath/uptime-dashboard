@@ -1,13 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { Charts } from './components/charts/charts';
 import { ReportList } from './components/report-list/report-list';
 import { StatsCards } from './components/stats-cards/stats-cards';
+import { AddReportModal } from './components/add-report-modal/add-report-modal';
 
 @Component({
   standalone: true,
   selector: 'app-dashboard',
-  imports: [ReportList, StatsCards, Charts],
+  imports: [ReportList, StatsCards, Charts, AddReportModal],
   template: `
+    @if (open()) {
+      <app-add-report-modal (close)="open.set(false)" />
+    }
     <div
       class="min-h-[calc(100vh-56px)] bg-gradient-to-br from-[#f4f3ff] to-[#ecebfa] p-8 flex flex-col"
     >
@@ -22,7 +26,7 @@ import { StatsCards } from './components/stats-cards/stats-cards';
           class="col-span-3 bg-white/80 backdrop-blur rounded-2xl
             shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-5 flex flex-col"
         >
-          <app-report-list class="flex-1" />
+          <app-report-list class="flex-1" (add)="open.set(true)" />
         </div>
 
         <div
@@ -35,4 +39,6 @@ import { StatsCards } from './components/stats-cards/stats-cards';
     </div>
   `,
 })
-export class DashboardComponent {}
+export class DashboardComponent {
+  open = signal(false);
+}

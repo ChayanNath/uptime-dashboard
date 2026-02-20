@@ -30,19 +30,15 @@
     @for (r of store.paginatedReports(); track r.id) {
       <div
         (click)="store.select(r.id)"
-        class="flex items-center justify-between px-3 py-2 rounded-lg cursor-pointer transition hover:bg-indigo-50"
+        class="px-3 py-2 rounded-lg cursor-pointer transition hover:bg-indigo-50"
         [class.bg-indigo-100]="store.selectedId() === r.id"
       >
-        <span class="text-sm text-gray-700">
-          {{ r.title }}
-        </span>
-
         <span
-          class="material-icons text-[18px]"
-          [class.text-indigo-500]="store.selectedId() === r.id"
-          [class.text-gray-300]="store.selectedId() !== r.id"
+          class="text-sm"
+          [class.text-indigo-600]="store.selectedId() === r.id"
+          [class.text-gray-700]="store.selectedId() !== r.id"
         >
-          check_box
+          {{ r.title }}
         </span>
       </div>
     }
@@ -80,3 +76,7 @@
     </div>
   </div>
 </div>
+
+@if (open()) {
+  <app-add-report-modal (close)="open.set(false)" />
+}

@@ -37,7 +37,7 @@ export class ReportStore {
     this.selectedId.set(id);
   }
 
-  private generateMetrics() {
+  generateMetrics() {
     return {
       openAlerts: this.rand(50, 150),
       closingRate: this.rand(30, 90),
